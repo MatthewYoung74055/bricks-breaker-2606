@@ -33,7 +33,6 @@ void Game::Reset()
 		bricks.push_back(newBrick);
 	}
 }
-
 void Game::ResetBall()
 {
 	ball.x_position = paddle.x_position + paddle.width / 2;
