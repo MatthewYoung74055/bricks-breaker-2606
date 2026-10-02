@@ -20,6 +20,7 @@ void Game::Reset()
 	ResetBall();
 
 	// TODO #2 - Add this brick and 4 more bricks to the vector
+	bricks.clear();
 	for (int i = 0; i < 5; ++i)
 	{
 		Box newBrick;
@@ -28,7 +29,7 @@ void Game::Reset()
 		newBrick.x_position = i * 12; // Adjust position for each brick
 		newBrick.y_position = 5;
 		newBrick.doubleThick = true;
-		newBrick.color = ConsoleColor::DarkGreen;
+		newBrick.color = ConsoleColor::DarkCyan;
 		bricks.push_back(newBrick);
 	}
 }
@@ -79,6 +80,16 @@ void Game::Render() const
 	}
 
 	Console::Lock(false);
+
+	if (bricks.size() == 0) {
+		Console::SetCursorPosition(20, 15);
+		std::cout << "Victory! Press R to reset.";
+	}
+
+	if (!ball.moving && ball.y_position + ball.y_velocity >= WINDOW_HEIGHT) {
+		Console::SetCursorPosition(20, 15);
+		std::cout << "Defeat! Press R to reset.";
+	}
 }
 
 void Game::CheckCollision()
@@ -108,4 +119,9 @@ void Game::CheckCollision()
 	}
 
 	// TODO #7 - If ball touches bottom of window, pause ball and display (render) defeat text with R to reset
+	if (ball.y_position + ball.y_velocity >= WINDOW_HEIGHT)
+	{
+		ball.moving = false;
+	}
+
 }
